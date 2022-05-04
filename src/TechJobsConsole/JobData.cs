@@ -38,20 +38,49 @@ namespace TechJobsConsole
             return values;
         }
 
+        //case insensitiviy implemented
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
             LoadData();
+
+            value = value.ToUpper();
 
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
                 string aValue = row[column];
+                string toCapsValue = aValue.ToUpper();
 
-                if (aValue.Contains(value))
+                if (toCapsValue.Contains(value))
                 {
                     jobs.Add(row);
+                }
+            }
+
+            return jobs;
+        }
+
+        //"search all" functionality and case insensitivity implemented
+       
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            // load data, if not already loaded
+            LoadData();
+
+            value = value.ToUpper();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+                foreach (KeyValuePair<string, string> jobData in row)
+
+                if (jobData.Value.ToUpper().Contains(value))
+                {
+                    jobs.Add(row);
+                        break;
                 }
             }
 
